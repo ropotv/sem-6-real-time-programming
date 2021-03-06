@@ -1,9 +1,9 @@
-defmodule EventsourceEx.Mixfile do
+defmodule RTP.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :rtp_lab,
+      app: :rtp,
       version: "1.0.0",
       elixir: "~> 1.5",
       build_embedded: Mix.env == :prod,
@@ -15,7 +15,10 @@ defmodule EventsourceEx.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [
+      extra_applications: [:logger],
+      mod: {RTP.AppModule, []}
+    ]
   end
 
 
