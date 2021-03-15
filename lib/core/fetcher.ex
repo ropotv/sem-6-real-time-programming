@@ -1,8 +1,8 @@
 defmodule Fetcher do
   def fetch() do
     receive do
-      tweet ->
-        Navigator.navigate(tweet)
+      data ->
+        Navigator.navigate(data)
         fetch()
     end
   end

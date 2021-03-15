@@ -7,8 +7,8 @@ defmodule Navigator do
     GenServer.start_link(__MODULE__, %{index: 0, children: children}, name: __MODULE__)
   end
 
-  def navigate(tweet) do
-    GenServer.cast(__MODULE__, {:route, tweet.data})
+  def navigate(body) do
+    GenServer.cast(__MODULE__, {:route, body.data})
   end
 
   def init(state) do
