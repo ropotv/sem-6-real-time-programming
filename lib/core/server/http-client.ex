@@ -1,8 +1,8 @@
-defmodule Fetcher do
+defmodule HttpClient do
   def fetch() do
     receive do
-      data ->
-        Navigator.navigate(data)
+      tweet ->
+        RTP.Server.post(tweet.data)
         fetch()
     end
   end

@@ -3,20 +3,20 @@ defmodule RTP.AppModule do
 
   @impl true
   def start(_type, _args) do
-    IO.puts "starting"
+    IO.puts "Starting Application"
 
     children = [
       %{
-        id: Navigator,
-        start: {Navigator, :start, []}
+        id: Server,
+        start: {RTP.Server, :start, []}
       },
       %{
-        id: Tweets1,
-        start: {Fetcher, :init, ["localhost:4000/tweets/1"]}
+        id: HTTP_1,
+        start: {HttpClient, :init, ["localhost:4000/tweets/1"]}
       },
       %{
-        id: Tweets2,
-        start: {Fetcher, :init, ["localhost:4000/tweets/2"]}
+        id: HTTP_2,
+        start: {HttpClient, :init, ["localhost:4000/tweets/2"]}
       }
     ]
 
