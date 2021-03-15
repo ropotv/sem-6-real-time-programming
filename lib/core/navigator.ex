@@ -2,7 +2,11 @@ defmodule Navigator do
   use GenServer
 
   def start() do
-    children = []
+    children = [
+      Emotions.Helper.start(0),
+      Emotions.Helper.start(1),
+      Emotions.Helper.start(2)
+    ]
 
     GenServer.start_link(__MODULE__, %{index: 0, children: children}, name: __MODULE__)
   end

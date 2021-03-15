@@ -24,7 +24,8 @@ defmodule RTP.Mixfile do
 
   defp deps do
     [
-      {:eventsource_ex, "~> 0.0.2"}
+      {:eventsource_ex, "~> 0.0.2"},
+      {:poison, "~> 3.1"}
     ]
   end
 end
