@@ -6,7 +6,7 @@ defmodule RTP.Database do
     IO.puts("Successfully connected to the database ")
     GenServer.start_link(
       __MODULE__,
-      %{connection: conn, tweets: [], bulkSize: bulkSize},
+      %{connection: conn, bulkSize: bulkSize, tweets: [], users: []},
       name: __MODULE__
     )
   end
@@ -38,6 +38,7 @@ defmodule RTP.Database do
         %{
           connection: state.connection,
           bulkSize: state.bulkSize,
+          users: state.users,
           tweets: [],
         }
       }
@@ -49,6 +50,7 @@ defmodule RTP.Database do
         %{
           connection: state.connection,
           bulkSize: state.bulkSize,
+          users: state.users,
           tweets: [result | state.tweets],
         }
       }
@@ -57,13 +59,34 @@ defmodule RTP.Database do
 
   @impl true
   def handle_cast({:save_user, user}, state) do
-    #  IO.puts("Save user with id" <> user["id_str"] <> " in database")
-    Mongo.insert_one(state.connection, "users", user)
 
-    {
-      :noreply,
-      state
-    }
+    if length(state.users) == state.bulkSize do
+      IO.puts("Save all #{state.bulkSize} users in database")
+
+      Mongo.insert_many(state.connection, "users", state.users)
+
+      {
+        :noreply,
+        %{
+          connection: state.connection,
+          bulkSize: state.bulkSize,
+          tweets: state.tweets,
+          users: [],
+        }
+      }
+    else
+      IO.puts("Add user with id #{user["id"]} into bulk store")
+
+      {
+        :noreply,
+        %{
+          connection: state.connection,
+          bulkSize: state.bulkSize,
+          tweets: state.tweets,
+          users: [user | state.users],
+        }
+      }
+    end
   end
 
 end
