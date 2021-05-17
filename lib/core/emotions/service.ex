@@ -41,7 +41,7 @@ defmodule Emotions.Service do
     if tweet != "{\"message\": panic}" do
       {:ok, tweet} = Poison.decode(tweet)
       saveTweetInDatabase(tweet["message"]["tweet"])
-      saveUserInDatabase(tweet["message"]["tweet"]["user"])
+      # saveUserInDatabase(tweet["message"]["tweet"]["user"])
     end
 
     {:noreply, state}

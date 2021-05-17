@@ -11,8 +11,8 @@ defmodule RTP.AppModule do
         start: {RTP.Server, :start, []}
       },
       %{
-        id: RTP.Database,
-        start: {RTP.Database, :start, []}
+        id: Database,
+        start: {RTP.Database, :start, [256]}
       },
       %{
         id: HTTP_1,
@@ -23,7 +23,6 @@ defmodule RTP.AppModule do
         start: {HttpClient, :init, ["localhost:3000/tweets/2"]}
       },
     ]
-
     opts = [strategy: :one_for_one, name: RTP.Supervisor]
     Supervisor.start_link(children, opts)
   end

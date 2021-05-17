@@ -1,12 +1,12 @@
 defmodule RTP.Database do
   use GenServer
 
-  def start() do
+  def start(bulkSize) do
     {:ok, conn} = Mongo.start_link(url: "mongodb://localhost:27013", database: "RTP")
     IO.puts("Successfully connected to the database ")
     GenServer.start_link(
       __MODULE__,
-      %{connection: conn},
+      %{connection: conn, tweets: [], bulkSize: bulkSize},
       name: __MODULE__
     )
   end
@@ -26,20 +26,38 @@ defmodule RTP.Database do
 
   @impl true
   def handle_cast({:save_tweet, tweet, score}, state) do
-    IO.puts("Save tweet with id" <> tweet["id_str"] <> " and score " <> Float.to_string(score) <> " in database")
-
     result = %{id: tweet["id"], score: score, tweet: tweet}
-    Mongo.insert_one(state.connection, "tweets", result)
 
-    {
-      :noreply,
-      state
-    }
+    if length(state.tweets) == state.bulkSize do
+      IO.puts("Save all #{state.bulkSize} tweets in database")
+
+      Mongo.insert_many(state.connection, "tweets", state.tweets)
+
+      {
+        :noreply,
+        %{
+          connection: state.connection,
+          bulkSize: state.bulkSize,
+          tweets: [],
+        }
+      }
+    else
+      IO.puts("Add tweet with id #{result.id} into bulk store")
+
+      {
+        :noreply,
+        %{
+          connection: state.connection,
+          bulkSize: state.bulkSize,
+          tweets: [result | state.tweets],
+        }
+      }
+    end
   end
 
   @impl true
   def handle_cast({:save_user, user}, state) do
-    IO.puts("Save user with id" <> user["id_str"] <> " in database")
+    #  IO.puts("Save user with id" <> user["id_str"] <> " in database")
     Mongo.insert_one(state.connection, "users", user)
 
     {
