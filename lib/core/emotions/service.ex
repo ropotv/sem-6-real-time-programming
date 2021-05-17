@@ -11,7 +11,7 @@ defmodule Emotions.Service do
   end
 
   def getScore(tweet) do
-    emotions = tweet["message"]["tweet"]["text"]
+    emotions = tweet["text"]
                |> String.replace(["!", "?", ":", ",", "."], "")
                |> String.split(" ", trim: true)
 
@@ -27,7 +27,8 @@ defmodule Emotions.Service do
   end
 
   defp saveInDatabase(tweet) do
-    RTP.Database.save_tweet(tweet)
+    score = getScore(tweet)
+    RTP.Database.save_tweet(tweet, score)
   end
 
 
@@ -35,7 +36,6 @@ defmodule Emotions.Service do
   def handle_cast({:tweet, tweet}, state) do
     if tweet != "{\"message\": panic}" do
       {:ok, tweet} = Poison.decode(tweet)
-      #   IO.puts("Score is = " <> Float.to_string(getScore(tweet["message"]["tweet"])))
       saveInDatabase(tweet["message"]["tweet"])
     end
 
