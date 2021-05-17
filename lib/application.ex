@@ -12,7 +12,7 @@ defmodule RTP.AppModule do
       },
       %{
         id: Database,
-        start: {RTP.Database, :start, [256]}
+        start: {RTP.Database, :start, [128]}
       },
       %{
         id: HTTP_1,
