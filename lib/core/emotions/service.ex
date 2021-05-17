@@ -26,9 +26,13 @@ defmodule Emotions.Service do
 
   end
 
-  defp saveInDatabase(tweet) do
+  defp saveTweetInDatabase(tweet) do
     score = getScore(tweet)
     RTP.Database.save_tweet(tweet, score)
+  end
+
+  defp saveUserInDatabase(user) do
+    RTP.Database.save_user(user)
   end
 
 
@@ -36,7 +40,8 @@ defmodule Emotions.Service do
   def handle_cast({:tweet, tweet}, state) do
     if tweet != "{\"message\": panic}" do
       {:ok, tweet} = Poison.decode(tweet)
-      saveInDatabase(tweet["message"]["tweet"])
+      saveTweetInDatabase(tweet["message"]["tweet"])
+      saveUserInDatabase(tweet["message"]["tweet"]["user"])
     end
 
     {:noreply, state}
