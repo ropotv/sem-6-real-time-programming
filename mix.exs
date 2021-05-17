@@ -6,9 +6,13 @@ defmodule RTP.Mixfile do
       app: :rtp,
       version: "1.0.0",
       elixir: "~> 1.5",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
-      deps: deps(),
+      build_embedded: false,
+      start_permanent: false,
+      deps: [
+        {:eventsource_ex, "~> 0.0.2"},
+        {:poison, "~> 3.1"},
+        {:mongodb, "~> 0.5.1"}
+      ],
       description: "A laboratory work for University.",
       name: "RTP Lab"
     ]
@@ -18,14 +22,6 @@ defmodule RTP.Mixfile do
     [
       extra_applications: [:logger],
       mod: {RTP.AppModule, []}
-    ]
-  end
-
-
-  defp deps do
-    [
-      {:eventsource_ex, "~> 0.0.2"},
-      {:poison, "~> 3.1"}
     ]
   end
 end

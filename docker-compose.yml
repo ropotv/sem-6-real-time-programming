@@ -5,3 +5,7 @@ services:
     image: alexburlacu/rtp-server:faf18x
     ports:
       - 3000:4000
+  database:
+    image: mongo
+    ports:
+      - 27013:27017

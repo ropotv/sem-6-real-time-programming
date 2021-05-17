@@ -11,13 +11,17 @@ defmodule RTP.AppModule do
         start: {RTP.Server, :start, []}
       },
       %{
+        id: RTP.Database,
+        start: {RTP.Database, :start, []}
+      },
+      %{
         id: HTTP_1,
         start: {HttpClient, :init, ["localhost:3000/tweets/1"]}
       },
       %{
         id: HTTP_2,
         start: {HttpClient, :init, ["localhost:3000/tweets/2"]}
-      }
+      },
     ]
 
     opts = [strategy: :one_for_one, name: RTP.Supervisor]
