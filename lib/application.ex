@@ -3,7 +3,7 @@ defmodule RTP.AppModule do
 
   @impl true
   def start(_type, _args) do
-    IO.puts "Starting Application"
+    Console.log("Starting Application")
 
     children = [
       %{
@@ -12,7 +12,7 @@ defmodule RTP.AppModule do
       },
       %{
         id: Database,
-        start: {RTP.Database, :start, [128]}
+        start: {RTP.Database, :start, [%{bulkSize: 128, debounceTime: 200}]}
       },
       %{
         id: HTTP_1,
