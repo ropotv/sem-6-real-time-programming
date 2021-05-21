@@ -12,7 +12,7 @@ services:
     image: alexburlacu/rtp-server:faf18x
     container_name: rtp-elixir-api
     ports:
-      - 3000:4000
+      - 4000:4000
   rtp-elixir-database:
     image: mongo
     container_name: rtp-elixir-database
