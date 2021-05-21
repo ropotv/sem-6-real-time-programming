@@ -2,7 +2,7 @@ defmodule RTP.Database do
   use GenServer
 
   def start(initialState) do
-    {:ok, conn} = Mongo.start_link(url: "mongodb://localhost:27013", database: "RTP")
+    {:ok, conn} = Mongo.start_link(url: "mongodb://rtp-elixir-database:27017", database: "RTP")
     Console.log("Successfully connected to the database")
     GenServer.start_link(
       __MODULE__,

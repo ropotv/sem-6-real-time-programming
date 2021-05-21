@@ -1,11 +1,20 @@
 version: "3.7"
 
 services:
-  api:
+  rtp-elixir-app:
+    container_name: rtp-elixir-app
+    build:
+      context: .
+    depends_on:
+      - rtp-elixir-api
+      - rtp-elixir-database
+  rtp-elixir-api:
     image: alexburlacu/rtp-server:faf18x
+    container_name: rtp-elixir-api
     ports:
       - 3000:4000
-  database:
+  rtp-elixir-database:
     image: mongo
+    container_name: rtp-elixir-database
     ports:
-      - 27013:27017
+      - 27017:27017

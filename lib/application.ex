@@ -16,11 +16,11 @@ defmodule RTP.AppModule do
       },
       %{
         id: HTTP_1,
-        start: {HttpClient, :init, ["localhost:3000/tweets/1"]}
+        start: {HttpClient, :init, ["rtp-elixir-api:3000/tweets/1"]}
       },
       %{
         id: HTTP_2,
-        start: {HttpClient, :init, ["localhost:3000/tweets/2"]}
+        start: {HttpClient, :init, ["rtp-elixir-api:3000/tweets/2"]}
       },
     ]
     opts = [strategy: :one_for_one, name: RTP.Supervisor]
