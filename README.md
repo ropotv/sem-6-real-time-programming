@@ -3,11 +3,8 @@
 An Elixir project for university laboratory.
 
 ## Running
+Just run: <code style="color: lightcoral">docker-compose up --build</code> in the root directory
 
-<ul>
-<li>First time run: <code style="color: lightcoral">docker-compose up --build</code> </li>
-<li>Next time run: <code style="color: lightcoral">docker-compose up</code> </li>
-</ul>
 ## Information
 <ul>
 <li>Author - Vasile Ropot</li>
