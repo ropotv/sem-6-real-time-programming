@@ -5,7 +5,7 @@ defmodule Broker do
     {:ok, arg}
   end
 
-  def start_link(host, port) do
+  def start(host, port) do
     {:ok, socket} = TCPHelper.connect(host, port)
     Console.log("Broker is ready to work on #{host}:#{port}")
 

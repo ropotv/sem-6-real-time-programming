@@ -21,7 +21,7 @@ defmodule Broker do
 
   def subscribe(body, socket) do
     Console.log("Got the socket body")
-    IO.inspect(body)
+    Console.log(body)
 
     subscribe(socket)
   end
