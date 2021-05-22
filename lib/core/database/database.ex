@@ -31,7 +31,7 @@ defmodule RTP.Database do
   def handle_cast({:save_tweet_and_user, tweet, user}, state) do
     currentTime = :os.system_time(:millisecond)
 
-    if length(state.tweets) == state.bulkSize or currentTime - state.previousTime > state.debounceTime do
+    if (length(state.tweets) == state.bulkSize or currentTime - state.previousTime > state.debounceTime) and (length(state.tweets) > 0) do
       Console.log(
         "Save all #{length(state.tweets)} tweets and users in database with the time #{
           currentTime - state.previousTime
