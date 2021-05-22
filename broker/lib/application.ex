@@ -5,7 +5,12 @@ defmodule ApplicationModule do
   def start(_type, _args) do
     Console.log("Starting Broker")
 
-    children = []
+    children = [
+      %{
+        id: KVServer,
+        start: {KVServer, :accept, [4040]}
+      }
+    ]
     opts = [strategy: :one_for_one]
     Supervisor.start_link(children, opts)
   end
