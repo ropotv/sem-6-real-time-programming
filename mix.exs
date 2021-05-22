@@ -1,4 +1,4 @@
-defmodule RTP.Mixfile do
+defmodule Mixfile do
   use Mix.Project
 
   def project do
@@ -21,7 +21,7 @@ defmodule RTP.Mixfile do
   def application do
     [
       extra_applications: [:logger],
-      mod: {RTP.AppModule, []}
+      mod: {ApplicationModule, []}
     ]
   end
 end

@@ -1,6 +1,6 @@
-defmodule Emotions.Store do
-  def getEmotionScore(emotion) do
-    mappedData = %{
+defmodule Words do
+  def getWordsScoreMap() do
+    %{
       abandon: -2,
       abandoned: -2,
       abandons: -2,
@@ -2456,7 +2456,5 @@ defmodule Emotions.Store do
       zealots: -2,
       zealous: 2,
     }
-
-    Map.get(mappedData, String.to_atom(emotion), 0)
   end
 end

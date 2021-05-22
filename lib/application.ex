@@ -1,4 +1,4 @@
-defmodule RTP.AppModule do
+defmodule ApplicationModule do
   use Application
 
   @impl true
@@ -8,22 +8,18 @@ defmodule RTP.AppModule do
     children = [
       %{
         id: Server,
-        start: {RTP.Server, :start, []}
+        start: {Server, :start, []}
       },
       %{
-        id: Database,
-        start: {RTP.Database, :start, [%{bulkSize: 128, debounceTime: 200}]}
+        id: FirstTweets,
+        start: {Fetcher, :init, ["rtp-elixir-api:4000/tweets/1"]}
       },
       %{
-        id: HTTP_1,
-        start: {HttpClient, :init, ["rtp-elixir-api:4000/tweets/1"]}
-      },
-      %{
-        id: HTTP_2,
-        start: {HttpClient, :init, ["rtp-elixir-api:4000/tweets/2"]}
+        id: SecondTweets,
+        start: {Fetcher, :init, ["rtp-elixir-api:4000/tweets/2"]}
       },
     ]
-    opts = [strategy: :one_for_one, name: RTP.Supervisor]
+    opts = [strategy: :one_for_one, name: Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
