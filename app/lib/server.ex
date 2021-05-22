@@ -29,7 +29,7 @@ defmodule Server do
       state.usersService
       |> Tuple.to_list()
       |> Enum.at(1)
-      |> GenServer.cast({:save, data["message"]["tweet"]})
+      |> GenServer.cast({:save, data["message"]["tweet"]["user"]})
     end
 
     {:noreply, state}
