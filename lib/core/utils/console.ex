@@ -1,8 +1,12 @@
 defmodule Console do
-  @moduledoc false
+  require Logger
 
   def log(data) do
-    IO.puts IO.ANSI.format([:yellow_background, :black, inspect(data)])
+    Logger.info(data)
+  end
+
+  def warn(data) do
+    Logger.warning(data)
   end
 end
 

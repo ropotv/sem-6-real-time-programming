@@ -32,7 +32,7 @@ defmodule RTP.Database do
     currentTime = :os.system_time(:millisecond)
 
     if (length(state.tweets) == state.bulkSize or currentTime - state.previousTime > state.debounceTime) and (length(state.tweets) > 0) do
-      Console.log(
+      Console.warn(
         "Save all #{length(state.tweets)} tweets and users in database with the time #{
           currentTime - state.previousTime
         }"
