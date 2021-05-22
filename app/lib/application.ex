@@ -19,7 +19,7 @@ defmodule ApplicationModule do
         start: {Fetcher, :init, ["rtp-elixir-api:4000/tweets/2"]}
       },
     ]
-    opts = [strategy: :one_for_one, name: Supervisor]
+    opts = [strategy: :one_for_one]
     Supervisor.start_link(children, opts)
   end
 end

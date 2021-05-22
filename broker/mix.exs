@@ -3,15 +3,11 @@ defmodule Mixfile do
 
   def project do
     [
-      app: :app,
-      name: "Application",
+      app: :broker,
+      name: "Broker",
       version: "1.0.0",
       elixir: "~> 1.5",
-      deps: [
-        {:eventsource_ex, "~> 0.0.2"},
-        {:poison, "~> 3.1"},
-        {:mongodb, "~> 0.5.1"}
-      ],
+      deps: [],
     ]
   end
 

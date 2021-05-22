@@ -8,6 +8,12 @@ services:
     depends_on:
       - rtp-elixir-api
       - rtp-elixir-database
+  rtp-elixir-broker:
+    container_name: rtp-elixir-broker
+    build:
+      context: broker
+    ports:
+      - 6666:6666
   rtp-elixir-api:
     image: alexburlacu/rtp-server:faf18x
     container_name: rtp-elixir-api
