@@ -11,6 +11,10 @@ defmodule ApplicationModule do
         start: {Server, :start, []}
       },
       %{
+        id: Broker,
+        start: {Broker, :start_link, ['rtp-elixir-broker', 4040]},
+      },
+      %{
         id: FirstTweets,
         start: {Fetcher, :init, ["rtp-elixir-api:4000/tweets/1"]}
       },

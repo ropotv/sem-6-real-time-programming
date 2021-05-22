@@ -1,13 +1,13 @@
 version: "3.7"
 
 services:
-  #  rtp-elixir-app:
-  #    container_name: rtp-elixir-app
-  #    build:
-  #      context: app
-  #    depends_on:
-  #      - rtp-elixir-api
-  #      - rtp-elixir-database
+  rtp-elixir-app:
+    container_name: rtp-elixir-app
+    build:
+      context: app
+    depends_on:
+      - rtp-elixir-api
+      - rtp-elixir-database
   rtp-elixir-broker:
     container_name: rtp-elixir-broker
     build:
