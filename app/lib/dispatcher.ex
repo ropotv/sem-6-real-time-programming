@@ -1,4 +1,4 @@
-defmodule Server do
+defmodule Dispatcher do
   use GenServer
 
   def init(arg) do
@@ -8,16 +8,16 @@ defmodule Server do
   def start() do
     twitterService = TwitterService.start()
     usersService = UsersService.start()
-    Console.log("Server was started")
+    Console.log("Dispatcher was started")
 
     GenServer.start_link(__MODULE__, %{twitterService: twitterService, usersService: usersService}, name: __MODULE__)
   end
 
-  def post(data) do
-    GenServer.cast(__MODULE__, {:post, data})
+  def dispatch(data) do
+    GenServer.cast(__MODULE__, {:dispatch, data})
   end
 
-  def handle_cast({:post, data}, state) do
+  def handle_cast({:dispatch, data}, state) do
     if data != "{\"message\": panic}" do
       {:ok, data} = Poison.decode(data)
 

@@ -6,7 +6,7 @@ defmodule Fetcher do
 
   def loopFetch() do
     receive do
-      body -> Server.post(body.data)
+      body -> Dispatcher.dispatch(body.data)
     end
     loopFetch()
   end

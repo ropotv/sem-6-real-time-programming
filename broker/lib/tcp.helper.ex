@@ -1,4 +1,4 @@
-defmodule TCPServer do
+defmodule TCPHelper do
   def listen(port) do
     :gen_tcp.listen(port, [:binary, packet: :line, active: false, reuseaddr: true])
   end

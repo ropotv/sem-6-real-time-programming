@@ -7,8 +7,8 @@ defmodule ApplicationModule do
 
     children = [
       %{
-        id: KVServer,
-        start: {KVServer, :accept, [4040]}
+        id: Broker,
+        start: {Broker, :accept, [4040]}
       }
     ]
     opts = [strategy: :one_for_one]

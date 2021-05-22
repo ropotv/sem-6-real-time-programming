@@ -6,8 +6,8 @@ defmodule Broker do
   end
 
   def start_link(host, port) do
-    {:ok, socket} = TCPServer.connect(host, port)
-    Console.log("Broker is ready to work")
+    {:ok, socket} = TCPHelper.connect(host, port)
+    Console.log("Broker is ready to work on #{host}:#{port}")
 
     GenServer.start_link(__MODULE__, %{socket: socket}, name: __MODULE__)
   end
@@ -17,7 +17,7 @@ defmodule Broker do
   end
 
   def handle_cast({:send, {head, body}}, state) do
-    TCPServer.send(state.socket, %{head: head, body: body})
+    TCPHelper.send(state.socket, %{head: head, body: body})
 
     {:noreply, state}
   end

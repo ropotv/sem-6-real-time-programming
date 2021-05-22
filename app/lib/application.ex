@@ -7,8 +7,8 @@ defmodule ApplicationModule do
 
     children = [
       %{
-        id: Server,
-        start: {Server, :start, []}
+        id: Dispatcher,
+        start: {Dispatcher, :start, []}
       },
       %{
         id: Broker,
