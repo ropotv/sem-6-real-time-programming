@@ -11,7 +11,10 @@ COPY . .
 RUN mix local.hex --force
 
 # Install dependencies
-RUN mix deps.get
+RUN mix deps.get -Y
+
+# Add rebar
+RUN mix local.rebar --force
 
 # Run application
 CMD mix run --no-halt

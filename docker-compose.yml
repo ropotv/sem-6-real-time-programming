@@ -4,12 +4,10 @@ services:
   rtp-elixir-app:
     container_name: rtp-elixir-app
     build:
-      context: .
+      context: app
     depends_on:
       - rtp-elixir-api
       - rtp-elixir-database
-    volumes:
-      - .:/app
   rtp-elixir-api:
     image: alexburlacu/rtp-server:faf18x
     container_name: rtp-elixir-api
