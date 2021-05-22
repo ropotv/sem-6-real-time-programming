@@ -7,10 +7,6 @@ defmodule ApplicationModule do
 
     children = [
       %{
-        id: Dispatcher,
-        start: {Dispatcher, :start, []}
-      },
-      %{
         id: Broker,
         start: {Broker, :start_link, ['rtp-elixir-broker', 4040]},
       },

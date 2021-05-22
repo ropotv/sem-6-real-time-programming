@@ -1,18 +1,22 @@
 defmodule TCPHelper do
   def listen(port) do
-    :gen_tcp.listen(port, [:binary, packet: :line, active: false, reuseaddr: true])
+    :gen_tcp.listen(port, [:binary, active: false, reuseaddr: true])
   end
 
   def accept(socket) do
     :gen_tcp.accept(socket)
   end
 
-  def send(socket, body) do
-    :gen_tcp.send(socket, body)
+  def send(socket, data) do
+    :gen_tcp.send(socket, data)
   end
 
   def read(socket) do
-    {:ok, data} = :gen_tcp.recv(socket, 0)
-    data
+    try do
+      {:ok, body} = :gen_tcp.recv(socket, 0)
+      body
+    rescue
+      _ -> :error
+    end
   end
 end

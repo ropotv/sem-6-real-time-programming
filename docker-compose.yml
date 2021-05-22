@@ -1,6 +1,12 @@
 version: "3.7"
 
 services:
+  rtp-elixir-broker:
+    container_name: rtp-elixir-broker
+    build:
+      context: broker
+    ports:
+      - 4040:4040
   rtp-elixir-app:
     container_name: rtp-elixir-app
     build:
@@ -8,12 +14,6 @@ services:
     depends_on:
       - rtp-elixir-api
       - rtp-elixir-database
-  rtp-elixir-broker:
-    container_name: rtp-elixir-broker
-    build:
-      context: broker
-    ports:
-      - 4040:4040
   rtp-elixir-api:
     image: alexburlacu/rtp-server:faf18x
     container_name: rtp-elixir-api
