@@ -1,15 +1,15 @@
 defmodule UsersService do
   use GenServer
 
-  def start() do
-    database = Database.connect("UsersDatabase", "RTP", "users", 1000, 1000)
+  def init(arg) do
+    {:ok, arg}
+  end
+
+  def start(name, database, collection, bulkSize, bulkDebounce) do
+    database = Database.connect(name, database, collection, bulkSize, bulkDebounce)
     Console.log("Users Service was Initialized")
 
     GenServer.start_link(__MODULE__, %{database: database}, name: __MODULE__)
-  end
-
-  def init(arg) do
-    {:ok, arg}
   end
 
   @impl true

@@ -8,7 +8,15 @@ defmodule ApplicationModule do
     children = [
       %{
         id: Broker,
-        start: {Broker, :start_link, ['rtp-elixir-broker', 4040]},
+        start: {Broker, :start, ['rtp-elixir-broker', 4040]},
+      },
+      %{
+        id: TwitterService,
+        start: {TwitterService, :start, ["TwitterService", "RTP", "tweets", 128, 200]},
+      },
+      %{
+        id: UsersService,
+        start: {UsersService, :start, ["UsersService", "RTP", "users", 1000, 1000]},
       },
       %{
         id: FirstTweets,
