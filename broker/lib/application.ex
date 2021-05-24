@@ -1,9 +1,10 @@
-defmodule ApplicationModule do
+defmodule BrokerModule do
   use Application
+  require Logger
 
   @impl true
   def start(_type, _args) do
-    Console.log("Starting Broker")
+    Logger.info("Starting Broker")
 
     children = [
       %{

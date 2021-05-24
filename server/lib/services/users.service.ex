@@ -1,5 +1,6 @@
 defmodule UsersService do
   use GenServer
+  require Logger
 
   def init(arg) do
     {:ok, arg}
@@ -7,7 +8,7 @@ defmodule UsersService do
 
   def start(name, database, collection, bulkSize, bulkDebounce) do
     database = Database.connect(name, database, collection, bulkSize, bulkDebounce)
-    Console.log("Users Service was Initialized")
+    Logger.info("Users Service was Initialized")
 
     GenServer.start_link(__MODULE__, %{database: database}, name: __MODULE__)
   end

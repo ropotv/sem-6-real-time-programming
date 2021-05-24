@@ -3,7 +3,7 @@ defmodule Broker do
 
   def accept(port) do
     {:ok, socket} = TCPHelper.listen(port)
-    Console.log("Broker is ready to work on port #{port}")
+    Logger.info("Broker is ready to work on port #{port}")
 
     loop_acceptor(socket)
   end
@@ -20,8 +20,8 @@ defmodule Broker do
   end
 
   def subscribe(body, socket) do
-    Console.log("Got the socket body")
-    Console.log(body)
+    Logger.info("Got the socket body")
+    Logger.info(body)
 
     subscribe(socket)
   end

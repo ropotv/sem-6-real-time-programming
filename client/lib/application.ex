@@ -1,9 +1,10 @@
 defmodule ClientModule do
   use Application
+  require Logger
 
   @impl true
   def start(_type, _args) do
-    Console.log("Starting Client")
+    Logger.info("Starting Client")
 
     children = []
     opts = [strategy: :one_for_one]

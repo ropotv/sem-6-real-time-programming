@@ -1,5 +1,6 @@
 defmodule Broker do
   use GenServer
+  require Logger
 
   def init(arg) do
     {:ok, arg}
@@ -7,7 +8,7 @@ defmodule Broker do
 
   def start(host, port) do
     {:ok, socket} = TCPHelper.connect(host, port)
-    Console.log("Broker is ready to work on #{host}:#{port}")
+    Logger.info("Broker is ready to work on #{host}:#{port}")
 
     GenServer.start_link(__MODULE__, %{socket: socket}, name: __MODULE__)
   end
