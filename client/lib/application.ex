@@ -6,7 +6,16 @@ defmodule ClientModule do
   def start(_type, _args) do
     Logger.info("Starting Client")
 
-    children = []
+    children = [
+      %{
+        id: TwitterService,
+        start: {TwitterService, :start, ["TwitterService", "RTP", "tweets", 128, 200]},
+      },
+      %{
+        id: UsersService,
+        start: {UsersService, :start, ["UsersService", "RTP", "users", 1000, 1000]},
+      }
+    ]
     opts = [strategy: :one_for_one]
     Supervisor.start_link(children, opts)
   end

@@ -7,7 +7,10 @@ defmodule ClientMixProject do
       name: "Client",
       version: "1.0.0",
       elixir: "~> 1.5",
-      deps: [],
+      deps: [
+        {:mongodb, "~> 0.5.1"},
+        {:poison, "~> 3.1"},
+      ],
     ]
   end
 

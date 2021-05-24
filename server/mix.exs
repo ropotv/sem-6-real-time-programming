@@ -10,7 +10,6 @@ defmodule ServerMixProject do
       deps: [
         {:eventsource_ex, "~> 0.0.2"},
         {:poison, "~> 3.1"},
-        {:mongodb, "~> 0.5.1"}
       ],
     ]
   end
