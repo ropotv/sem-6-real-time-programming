@@ -1,4 +1,4 @@
-defmodule Broker do
+defmodule Connector do
   use GenServer
   require Logger
 
@@ -6,16 +6,15 @@ defmodule Broker do
     {:ok, arg}
   end
 
-  def start(host, port) do
+  def connect(host, port) do
     {:ok, socket} = TCPHelper.connect(host, port)
-    Logger.info("Broker is ready to work on #{host}:#{port}")
+    Logger.info("Server is connected to broker #{host}:#{port}")
 
     GenServer.start_link(__MODULE__, %{socket: socket}, name: __MODULE__)
   end
 
-  def sendPacket(head, body) do
-    encoded = Poison.encode!(%{head: head, body: body})
-    GenServer.cast(__MODULE__, {:send_packet, encoded})
+  def send_packet(topic, body) do
+    GenServer.cast(__MODULE__, {:send_packet, Poison.encode!(%{topic: topic, body: body})})
   end
 
   def handle_cast({:send_packet, data}, state) do

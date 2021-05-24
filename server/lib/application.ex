@@ -8,8 +8,8 @@ defmodule ServerModule do
 
     children = [
       %{
-        id: Broker,
-        start: {Broker, :start, ['rtp-broker', 4040]},
+        id: Connector,
+        start: {Connector, :connect, ['rtp-broker', 4040]},
       },
       %{
         id: TwitterService,
@@ -20,11 +20,11 @@ defmodule ServerModule do
         start: {UsersService, :start, ["UsersService", "RTP", "users", 1000, 1000]},
       },
       %{
-        id: FirstTweets,
+        id: FirstSource,
         start: {Fetcher, :init, ["rtp-api:4000/tweets/1"]}
       },
       %{
-        id: SecondTweets,
+        id: SecondSource,
         start: {Fetcher, :init, ["rtp-api:4000/tweets/2"]}
       },
     ]

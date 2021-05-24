@@ -1,13 +1,13 @@
 defmodule Fetcher do
   def init(url) do
     EventsourceEx.new(url, stream_to: self())
-    loopFetch()
+    loop_fetch()
   end
 
-  def loopFetch() do
+  def loop_fetch() do
     receive do
       body -> Dispatcher.dispatch(body.data)
     end
-    loopFetch()
+    loop_fetch()
   end
 end
