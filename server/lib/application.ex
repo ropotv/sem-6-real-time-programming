@@ -1,4 +1,4 @@
-defmodule ApplicationModule do
+defmodule ServerModule do
   use Application
 
   @impl true
@@ -8,7 +8,7 @@ defmodule ApplicationModule do
     children = [
       %{
         id: Broker,
-        start: {Broker, :start, ['rtp-elixir-broker', 4040]},
+        start: {Broker, :start, ['rtp-broker', 4040]},
       },
       %{
         id: TwitterService,
@@ -20,11 +20,11 @@ defmodule ApplicationModule do
       },
       %{
         id: FirstTweets,
-        start: {Fetcher, :init, ["rtp-elixir-api:4000/tweets/1"]}
+        start: {Fetcher, :init, ["rtp-api:4000/tweets/1"]}
       },
       %{
         id: SecondTweets,
-        start: {Fetcher, :init, ["rtp-elixir-api:4000/tweets/2"]}
+        start: {Fetcher, :init, ["rtp-api:4000/tweets/2"]}
       },
     ]
     opts = [strategy: :one_for_one]

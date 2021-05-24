@@ -1,10 +1,10 @@
-defmodule Mixfile do
+defmodule ServerMixProject do
   use Mix.Project
 
   def project do
     [
       app: :app,
-      name: "Application",
+      name: "Server",
       version: "1.0.0",
       elixir: "~> 1.5",
       deps: [
@@ -18,7 +18,7 @@ defmodule Mixfile do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ApplicationModule, []}
+      mod: {ServerModule, []}
     ]
   end
 end

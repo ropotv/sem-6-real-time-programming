@@ -6,7 +6,7 @@ defmodule Database do
   end
 
   def connect(name, database, collection, bulkSize, bulkDebounce) do
-    {:ok, connection} = Mongo.start_link(url: "mongodb://rtp-elixir-database:27017", database: database)
+    {:ok, connection} = Mongo.start_link(url: "mongodb://rtp-database:27017", database: database)
     Console.log(
       "Connected to database #{database}/#{collection} with bulkSize #{bulkSize} and debounce #{bulkDebounce}ms"
     )
