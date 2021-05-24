@@ -9,25 +9,25 @@ defmodule Broker do
   end
 
   defp loop_acceptor(socket) do
-    {:ok, client} = TCPHelper.accept(socket)
+    {:ok, sock} = TCPHelper.accept(socket)
 
-    read_client(client)
+    read(sock)
     loop_acceptor(socket)
   end
 
-  def read_client(:error, _) do
+  def read(:error, _) do
 
   end
 
-  def read_client(body, client) do
-    Logger.info("Got the client body")
+  def read(body, socket) do
+    Logger.info("Got the socket body")
     Logger.info(body)
 
-    read_client(client)
+    read(socket)
   end
 
-  def read_client(client) do
-    response = TCPHelper.read(client)
-    read_client(response, client)
+  def read(socket) do
+    response = TCPHelper.read(socket)
+    read(response, socket)
   end
 end
