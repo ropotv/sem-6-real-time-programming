@@ -7,6 +7,7 @@ services:
       context: broker
     ports:
       - 4040:4040
+
   rtp-elixir-app:
     container_name: rtp-elixir-app
     build:
@@ -14,11 +15,18 @@ services:
     depends_on:
       - rtp-elixir-api
       - rtp-elixir-database
+
+  rtp-elixir-client:
+    container_name: rtp-elixir-client
+    build:
+      context: client
+
   rtp-elixir-api:
     image: alexburlacu/rtp-server:faf18x
     container_name: rtp-elixir-api
     ports:
       - 4000:4000
+
   rtp-elixir-database:
     image: mongo
     container_name: rtp-elixir-database
