@@ -11,7 +11,12 @@ defmodule Handler do
 
   defp handle_action(:content, client, data) do
     content = data["content"]
+    {:ok, encoded} = Poison.encode!(content)
 
+    send_content(client, encoded)
+  end
+
+  def send_content(client, content) do
     try do
       TCPHelper.send(client, content)
     rescue

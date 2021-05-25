@@ -9,8 +9,8 @@ defmodule Queue do
     GenServer.start_link(__MODULE__, %{queue: :queue.new()}, name: __MODULE__)
   end
 
-  def add(data) do
-    GenServer.cast(__MODULE__, {:add, data})
+  def add(client, content) do
+    GenServer.cast(__MODULE__, {:add, client, content})
   end
 
   def get() do
@@ -21,8 +21,8 @@ defmodule Queue do
     GenServer.cast(__MODULE__, {:length})
   end
 
-  def handle_cast({:add, data}, state) do
-    queue = :queue.in(data, state.queue)
+  def handle_cast({:add, client, content}, state) do
+    queue = :queue.in(%{client: client, content: content}, state.queue)
     {:noreply, %{queue: queue}}
   end
 

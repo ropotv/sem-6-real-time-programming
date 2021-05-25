@@ -8,6 +8,10 @@ defmodule BrokerModule do
 
     children = [
       %{
+        id: Queue.Manager,
+        start: {Queue.Manager, :start_link, []}
+      },
+      %{
         id: Registry,
         start: {Registry, :init, []}
       },
