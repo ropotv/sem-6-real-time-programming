@@ -7,7 +7,9 @@ defmodule BrokerMixProject do
       name: "Broker",
       version: "1.0.0",
       elixir: "~> 1.5",
-      deps: [],
+      deps: [
+        {:poison, "~> 3.1"},
+      ],
     ]
   end
 

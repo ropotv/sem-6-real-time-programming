@@ -2,23 +2,22 @@ defmodule Queue.Manager do
   use GenServer
 
   def init(arg) do
+    manage()
     {:ok, arg}
   end
 
   def start_link() do
-    manage()
     GenServer.start_link(__MODULE__, %{})
   end
 
   def handle_info(:manage, state) do
-    if Queue.len() > 0 do
+    if Queue.length() > 0 do
       {client, content} = Queue.get()
       Handler.send_content(client, content)
       manage()
     else
       manage()
     end
-
     {:noreply, state}
   end
 

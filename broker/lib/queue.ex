@@ -14,11 +14,11 @@ defmodule Queue do
   end
 
   def get() do
-    GenServer.cast(__MODULE__, {:get})
+    GenServer.call(__MODULE__, :get)
   end
 
   def length() do
-    GenServer.cast(__MODULE__, {:length})
+    GenServer.call(__MODULE__, :length)
   end
 
   def handle_cast({:add, client, content}, state) do
@@ -26,7 +26,7 @@ defmodule Queue do
     {:noreply, %{queue: queue}}
   end
 
-  def handle_cast({:get}, state) do
+  def handle_call(:get, _, state) do
     {head, queue} = :queue.out(state.queue)
     if head == :empty do
       {:reply, nil, %{queue: queue}}
@@ -36,7 +36,7 @@ defmodule Queue do
     end
   end
 
-  def handle_cast({:length}, state) do
+  def handle_call(:length, _, state) do
     {:reply, :queue.len(state.queue), state}
   end
 end

@@ -21,8 +21,8 @@ defmodule Broker do
 
   def read(body, socket) do
     Logger.info("Got the socket body")
-    Logger.info(body)
-
+    # Logger.info(body)
+    Handler.handle(body)
     read(socket)
   end
 
