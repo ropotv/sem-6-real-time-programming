@@ -8,6 +8,10 @@ defmodule BrokerModule do
 
     children = [
       %{
+        id: Registry,
+        start: {Registry, :init, []}
+      },
+      %{
         id: Broker,
         start: {Broker, :accept, [4040]}
       }
