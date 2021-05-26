@@ -1,22 +1,13 @@
 defmodule Handler do
-  defp handle_action(:subscribe, client, data) do
-    topic = data["topic"]
+  defp handle_action(:subscribe, client, topic) do
     Registry.add(topic, client)
   end
 
-  defp handle_action(:unsubscribe, client, data) do
-    topic = data["topic"]
+  defp handle_action(:unsubscribe, client, topic) do
     Registry.delete(topic, client)
   end
 
-  defp handle_action(:content, client, data) do
-    content = data["content"]
-    {:ok, encoded} = Poison.encode!(content)
-
-    send_content(client, encoded)
-  end
-
-  def send_content(client, content) do
+  defp send_content(client, content) do
     try do
       TCPHelper.send(client, content)
       IO.puts("Data was send to the client")
@@ -38,11 +29,13 @@ defmodule Handler do
     IO.inspect(clients)
 
     if type == "content" do
+      decoded_content = decoded["content"]
+      encoded_content = Poison.encode!(decoded_content)
       for _client <- clients  do
-        handle_action(:content, _client, decoded)
+        send_content(_client, encoded_content)
       end
     else
-      handle_action(String.to_atom(type), client, decoded)
+      handle_action(String.to_atom(type), client, topic)
     end
   end
 end
