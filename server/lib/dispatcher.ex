@@ -5,9 +5,23 @@ defmodule Dispatcher do
 
   def dispatch(data) do
     if data != "{\"message\": panic}" do
-      {:ok, decoded} = Poison.decode(data)
-      Queue.add("tweet", decoded["message"]["tweet"])
-      #   Queue.add("user", decoded["message"]["tweet"]["user"])
+      decoded = Poison.decode!(data)
+      tweet = decoded["message"]["tweet"]
+      user = tweet["user"]
+
+      new_tweet = %{
+        user: user["id"],
+        text: tweet["text"],
+        created_at: tweet["created_at"]
+      }
+
+      new_user = %{
+        id: user["id"],
+        name: user["name"]
+      }
+
+      Queue.add("tweet", new_tweet)
+      Queue.add("user", new_user)
     end
   end
 end

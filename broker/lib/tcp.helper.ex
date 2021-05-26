@@ -13,7 +13,7 @@ defmodule TCPHelper do
 
   def read(client) do
     try do
-      {:ok, body} = :gen_tcp.recv(client, 10000)
+      {:ok, body} = :gen_tcp.recv(client, 0)
       body
     rescue
       _ -> :error
