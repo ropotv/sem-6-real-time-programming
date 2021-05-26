@@ -17,14 +17,14 @@ defmodule Connector do
   end
 
   def subscribe(topic) do
-    GenServer.cast(__MODULE__, {:subscribe, Poison.encode!(%{type: "subscribe", topic: topic})})
+    GenServer.cast(__MODULE__, {:send, Poison.encode!(%{type: "subscribe", topic: topic})})
   end
 
   def unsubscribe(topic) do
-    GenServer.cast(__MODULE__, {:subscribe, Poison.encode!(%{type: "unsubscribe", topic: topic})})
+    GenServer.cast(__MODULE__, {:send, Poison.encode!(%{type: "unsubscribe", topic: topic})})
   end
 
-  def handle_cast({:subscribe, data}, state) do
+  def handle_cast({:send, data}, state) do
     TCPHelper.send(state.socket, data)
 
     {:noreply, state}
@@ -32,7 +32,9 @@ defmodule Connector do
 
   def handle_cast({:read}, state) do
     response = TCPHelper.read(state.socket)
-    Assistant.handle_response(response)
+    if response != :error do
+      Assistant.handle_response(response)
+    end
     {:noreply, state}
   end
 end

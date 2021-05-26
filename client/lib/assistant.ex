@@ -6,8 +6,8 @@ defmodule Assistant do
   end
 
   def start(tweetsLimit, usersLimit) do
-    twitterService = TwitterService.start("TwitterService", "RTP", "tweets", 1, 200)
-    usersService = UsersService.start("UsersService", "RTP", "users", 1, 1000)
+    twitterService = TwitterService.start("TwitterService", "RTP", "tweets", 20, 200)
+    usersService = UsersService.start("UsersService", "RTP", "users", 20, 1000)
 
     if tweetsLimit > 0 do
       Connector.subscribe("tweets")
@@ -50,54 +50,74 @@ defmodule Assistant do
   def handle_cast({:save, data}, state) do
     topic = data["topic"]
     content = data["content"]
-    tweetsSaved = state.tweetsSaved
-    usersSaved = state.usersSaved
+    IO.inspect(state)
+
+    IO.puts("Tweets Saved: #{state.tweetsSaved}")
+    IO.puts("Users Saved: #{state.usersSaved}")
 
     if content do
       case topic do
         "tweets" -> if state.tweetsLimit > 0 do
-                      if tweetsSaved < state.tweetsLimit do
+                      if state.tweetsSaved < state.tweetsLimit do
                         IO.puts("Got the tweet from server")
                         IO.inspect(content)
                         state.twitterService
                         |> Tuple.to_list()
                         |> Enum.at(1)
                         |> GenServer.cast({:save, content})
-                        tweetsSaved = state.tweetsSaved + 1;
+                        {
+                          :noreply,
+                          %{
+                            twitterService: state.twitterService,
+                            tweetsSaved: state.tweetsSaved + 1,
+                            tweetsLimit: state.tweetsLimit,
+                            usersService: state.usersService,
+                            usersSaved: state.usersSaved,
+                            usersLimit: state.usersLimit
+                          }
+                        }
                       else
                         Connector.unsubscribe("tweets")
                         IO.puts("Client was unsubscribed from topic: tweets")
+                        {:noreply, state}
                       end
+                    else
+                      {:noreply, state}
                     end
 
 
         "users" -> if state.usersLimit > 0 do
-                     if usersSaved < state.usersLimit do
+                     if state.usersSaved < state.usersLimit do
                        IO.puts("Got the user from server")
                        IO.inspect(content)
                        state.usersService
                        |> Tuple.to_list()
                        |> Enum.at(1)
                        |> GenServer.cast({:save, content})
-                       usersSaved = state.usersSaved + 1;
+                       IO.puts("Add to user")
+                       {
+                         :noreply,
+                         %{
+                           twitterService: state.twitterService,
+                           tweetsSaved: state.tweetsSaved,
+                           tweetsLimit: state.tweetsLimit,
+                           usersService: state.usersService,
+                           usersSaved: state.usersSaved + 1,
+                           usersLimit: state.usersLimit
+                         }
+                       }
                      else
                        Connector.unsubscribe("users")
                        IO.puts("Client was unsubscribed from topic: users")
+                       {:noreply, state}
                      end
+                   else
+                     {:noreply, state}
                    end
+        true -> {:noreply, state}
       end
+    else
+      {:noreply, state}
     end
-
-    {
-      :noreply,
-      %{
-        twitterService: state.twitterService,
-        tweetsSaved: tweetsSaved,
-        tweetsLimit: state.tweetsLimit,
-        usersService: state.usersService,
-        usersSaved: usersSaved,
-        usersLimit: state.usersLimit
-      }
-    }
   end
 end
