@@ -12,7 +12,7 @@ defmodule ClientModule do
       },
       %{
         id: Assistant,
-        start: {Assistant, :start, [["tweets"]]},
+        start: {Assistant, :start, [10, 5]},
       }
     ]
     opts = [strategy: :one_for_one]
