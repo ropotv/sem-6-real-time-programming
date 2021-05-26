@@ -1,10 +1,9 @@
 defmodule BrokerModule do
   use Application
-  require Logger
 
   @impl true
   def start(_type, _args) do
-    Logger.info("Starting Broker")
+    IO.puts("Starting Broker")
 
     children = [
       %{

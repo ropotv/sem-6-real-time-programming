@@ -1,6 +1,5 @@
 defmodule Connector do
   use GenServer
-  require Logger
 
   def init(arg) do
     {:ok, arg}
@@ -8,7 +7,7 @@ defmodule Connector do
 
   def connect(host, port) do
     {:ok, socket} = TCPHelper.connect(host, port)
-    Logger.info("Server is connected to broker #{host}:#{port}")
+    IO.puts("Server is connected to broker #{host}:#{port}")
 
     GenServer.start_link(__MODULE__, %{socket: socket}, name: __MODULE__)
   end

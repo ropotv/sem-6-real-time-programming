@@ -1,6 +1,5 @@
 defmodule Database do
   use GenServer
-  require Logger
 
   def init(arg) do
     {:ok, arg}
@@ -8,7 +7,7 @@ defmodule Database do
 
   def connect(name, database, collection, bulkSize, bulkDebounce) do
     {:ok, connection} = Mongo.start_link(url: "mongodb://rtp-database:27017", database: database)
-    Logger.info(
+    IO.puts(
       "Connected to database #{database}/#{collection} with bulkSize #{bulkSize} and debounce #{bulkDebounce}ms"
     )
 
@@ -34,7 +33,7 @@ defmodule Database do
     hasData = length(state.data) > 0
 
     if ((isSameLength || isPassedTime) && hasData) do
-      Logger.info("Saved #{length(state.data)} #{state.collection} in database with the time #{passedTime}ms")
+      IO.puts("Saved #{length(state.data)} #{state.collection} in database with the time #{passedTime}ms")
       Mongo.insert_many(state.connection, state.collection, state.data)
       {
         :noreply,

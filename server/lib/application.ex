@@ -1,10 +1,9 @@
 defmodule ServerModule do
   use Application
-  require Logger
 
   @impl true
   def start(_type, _args) do
-    Logger.info("Starting Server")
+    IO.puts("Starting Server")
 
     children = [
       %{

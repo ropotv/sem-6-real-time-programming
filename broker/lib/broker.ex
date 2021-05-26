@@ -1,9 +1,8 @@
 defmodule Broker do
-  require Logger
 
   def accept(port) do
     {:ok, socket} = TCPHelper.listen(port)
-    Logger.info("Broker is listening on port #{port}")
+    IO.puts("Broker is listening on port #{port}")
 
     loop_acceptor(socket)
   end

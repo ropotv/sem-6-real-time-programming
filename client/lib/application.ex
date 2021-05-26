@@ -1,10 +1,9 @@
 defmodule ClientModule do
   use Application
-  require Logger
 
   @impl true
   def start(_type, _args) do
-    Logger.info("Starting Client")
+    IO.puts("Starting Client")
 
     children = [
       %{
