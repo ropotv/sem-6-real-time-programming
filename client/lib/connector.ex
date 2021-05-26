@@ -28,11 +28,10 @@ defmodule Connector do
   end
 
   def handle_cast({:read}, state) do
-    IO.puts("read data")
-    data = TCPHelper.read(state.socket)
-
+    encoded_data = TCPHelper.read(state.socket)
+    decoded_data = Poison.decode!(encoded_data)
     IO.puts("Got the data from server")
-    IO.inspect(data)
+    IO.inspect(decoded_data)
 
     {:noreply, state}
   end

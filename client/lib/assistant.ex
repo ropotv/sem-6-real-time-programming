@@ -7,7 +7,7 @@ defmodule Assistant do
   def start(topics) do
     for topic <- topics do
       Connector.subscribe(topic)
-      IO.inspect("Client was subscribed to topic: #{topic}")
+      IO.puts("Client was subscribed to topic: #{topic}")
     end
 
     loop_acceptor()

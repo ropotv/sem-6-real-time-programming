@@ -22,17 +22,19 @@ defmodule Handler do
     topic = decoded["topic"]
     type = decoded["type"]
 
-    IO.inspect("Request type is: #{type}")
+    IO.puts("Request type is: #{type}")
 
     clients = Registry.get(topic)
-    IO.inspect("Clients are:")
-    IO.inspect(clients)
 
     if type == "content" do
+      IO.puts("Send content to the following clients:")
+      IO.inspect(clients)
+
       decoded_content = decoded["content"]
-      encoded_content = Poison.encode!(decoded_content)
+      encoded_data = Poison.encode!(%{topic: topic, content: decoded_content})
+
       for _client <- clients  do
-        send_content(_client, encoded_content)
+        send_content(_client, encoded_data)
       end
     else
       handle_action(String.to_atom(type), client, topic)

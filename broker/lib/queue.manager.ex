@@ -11,7 +11,7 @@ defmodule Queue.Manager do
   end
 
   def handle_info(:manage, state) do
-    IO.puts("manage")
+    IO.puts("check queue")
     if Queue.length() > 0 do
       {client, content} = Queue.get()
       Handler.send_content(client, content)

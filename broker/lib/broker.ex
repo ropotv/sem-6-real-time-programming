@@ -20,8 +20,8 @@ defmodule Broker do
   end
 
   def read(body, client) do
-    IO.inspect("Got the client body")
     decoded = Poison.decode!(body)
+    IO.puts("Got the client body")
     IO.inspect(decoded)
     Handler.handle(body, client)
     read(client)
