@@ -14,8 +14,14 @@ defmodule Assistant do
   end
 
 
-  def loop_acceptor() do
+  defp loop_acceptor() do
     Connector.read()
     loop_acceptor()
+  end
+
+  def handle_response(response) do
+    decoded = Poison.decode!(response)
+    IO.puts("Got the data from server")
+    IO.inspect(decoded)
   end
 end
