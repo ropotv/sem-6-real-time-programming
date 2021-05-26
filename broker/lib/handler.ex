@@ -31,7 +31,7 @@ defmodule Handler do
     topic = decoded["topic"]
     type = decoded["type"]
 
-    IO.inspect("Type is #{type}")
+    IO.inspect("Request type is: #{type}")
 
     clients = Registry.get(topic)
     IO.inspect("Clients are:")

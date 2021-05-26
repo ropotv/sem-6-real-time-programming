@@ -8,6 +8,10 @@ defmodule ClientModule do
 
     children = [
       %{
+        id: Connector,
+        start: {Connector, :connect, ['rtp-broker', 4040]},
+      },
+      %{
         id: TwitterService,
         start: {TwitterService, :start, ["TwitterService", "RTP", "tweets", 128, 200]},
       },
