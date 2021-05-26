@@ -14,7 +14,8 @@ defmodule Assistant do
   end
 
 
-  def loop_acceptor do
+  def loop_acceptor() do
+    Connector.read()
     loop_acceptor()
   end
 end

@@ -6,4 +6,13 @@ defmodule TCPHelper do
   def send(socket, data) do
     :gen_tcp.send(socket, data)
   end
+
+  def read(client) do
+    try do
+      {:ok, body} = :gen_tcp.recv(client, 0)
+      body
+    rescue
+      _ -> :error
+    end
+  end
 end
