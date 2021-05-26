@@ -22,6 +22,6 @@ defmodule Queue.Manager do
   end
 
   defp manage() do
-    Process.send_after(self(), :manage, 1000)
+    Process.send_after(self(), :manage, 5000)
   end
 end

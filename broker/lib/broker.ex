@@ -20,10 +20,16 @@ defmodule Broker do
   end
 
   def read(body, server) do
-    Logger.info("Got the client body")
-    IO.inspect(body)
-    # Handler.handle(body)
-    read(server)
+    IO.inspect("Got the client body")
+    try do
+      decoded = Poison.decode!(body)
+      IO.inspect(decoded)
+      # Handler.handle(body)
+      read(server)
+    rescue
+      _ -> IO.inspect({"can't parse, probably it is too long"})
+           read(server)
+    end
   end
 
   def read(server) do
