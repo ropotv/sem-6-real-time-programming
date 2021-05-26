@@ -14,13 +14,15 @@ services:
       context: server
     depends_on:
       - rtp-api
-      - rtp-database
       - rtp-broker
 
   rtp-client:
     container_name: rtp-client
     build:
       context: client
+    depends_on:
+      - rtp-broker
+      - rtp-database
 
   rtp-api:
     image: alexburlacu/rtp-server:faf18x

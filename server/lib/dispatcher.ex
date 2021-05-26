@@ -20,8 +20,8 @@ defmodule Dispatcher do
         name: user["name"]
       }
 
-      Queue.add("tweet", new_tweet)
-      Queue.add("user", new_user)
+      Queue.add("tweets", new_tweet)
+      Queue.add("users", new_user)
     end
   end
 end

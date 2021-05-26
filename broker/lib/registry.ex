@@ -10,7 +10,7 @@ defmodule Registry do
   end
 
   def add(key, values) do
-    Agent.update(__MODULE__, fn registry -> Map.put(registry, key, [values | get(key)]) end)
+    Agent.update(__MODULE__, fn registry -> Map.put(registry, key, [values | Map.get(registry, key, [])]) end)
   end
 
   def delete(key, value) do
