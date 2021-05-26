@@ -21,7 +21,8 @@ defmodule Broker do
 
   def read(body, server) do
     Logger.info("Got the client body")
-    Handler.handle(server)
+    IO.inspect(body)
+    # Handler.handle(body)
     read(server)
   end
 

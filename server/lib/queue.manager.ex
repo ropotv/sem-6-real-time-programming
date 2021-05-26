@@ -12,9 +12,8 @@ defmodule Queue.Manager do
 
   def handle_info(:manage, state) do
     if Queue.length() > 0 do
-      data = Queue.get()
-
-      Dispatcher.dispatch(data)
+      response = Queue.get()
+      Connector.send_topic(response.topic, response.content)
       manage()
     else
       manage()
@@ -23,6 +22,6 @@ defmodule Queue.Manager do
   end
 
   defp manage() do
-    Process.send_after(self(), :manage, 5000)
+    Process.send_after(self(), :manage, 1000)
   end
 end

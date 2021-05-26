@@ -6,8 +6,8 @@ defmodule Dispatcher do
   def dispatch(data) do
     if data != "{\"message\": panic}" do
       {:ok, decoded} = Poison.decode(data)
-      Connector.send_topic("tweet", decoded["message"]["tweet"])
-      Connector.send_topic("user", decoded["message"]["tweet"]["user"])
+      Queue.add("tweet", decoded["message"]["tweet"])
+      Queue.add("user", decoded["message"]["tweet"]["user"])
     end
   end
 end
