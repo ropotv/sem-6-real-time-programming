@@ -12,9 +12,9 @@ defmodule TwitterService do
     GenServer.start_link(__MODULE__, %{database: database}, name: __MODULE__)
   end
 
-  def get_score(tweet) do
+  def get_score(text) do
     wordsScoreMap = Words.getWordsScoreMap()
-    words = tweet["text"]
+    words = text
             |> String.replace(["!", "?", ":", ",", "."], "")
             |> String.split(" ", trim: true)
 
@@ -30,10 +30,18 @@ defmodule TwitterService do
 
   @impl true
   def handle_cast({:save, tweet}, state) do
+    new_tweet = %{
+      id: tweet["id"],
+      created_at: tweet["created_at"],
+      created_by: tweet["user"],
+      score: get_score(tweet["text"]),
+      text: tweet["text"]
+    }
+
     state.database
     |> Tuple.to_list()
     |> Enum.at(1)
-    |> GenServer.cast({:save, %{id: tweet["id"], score: get_score(tweet), tweet: tweet}})
+    |> GenServer.cast({:save, new_tweet})
 
     {:noreply, state}
   end
