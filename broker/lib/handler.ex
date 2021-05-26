@@ -26,7 +26,7 @@ defmodule Handler do
     end
   end
 
-  def handle(data) do
+  def handle(data, client) do
     decoded = Poison.decode!(data)
     topic = decoded["topic"]
     type = decoded["type"]
@@ -37,7 +37,11 @@ defmodule Handler do
     IO.inspect("Clients are:")
     IO.inspect(clients)
 
-    for client <- clients  do
+    if type == "content" do
+      for _client <- clients  do
+        handle_action(:content, _client, decoded)
+      end
+    else
       handle_action(String.to_atom(type), client, decoded)
     end
   end

@@ -9,27 +9,27 @@ defmodule Broker do
   end
 
   defp loop_acceptor(socket) do
-    {:ok, server} = TCPHelper.accept(socket)
-    pid = spawn_link(__MODULE__, :read, [server])
-    :gen_tcp.controlling_process(server, pid)
+    {:ok, client} = TCPHelper.accept(socket)
+    pid = spawn_link(__MODULE__, :read, [client])
+    :gen_tcp.controlling_process(client, pid)
     loop_acceptor(socket)
   end
 
-  def read(:error, server) do
-    read(server)
+  def read(:error, client) do
+    read(client)
   end
 
-  def read(body, server) do
+  def read(body, client) do
     IO.inspect("Got the client body")
     decoded = Poison.decode!(body)
     IO.inspect(decoded)
-    Handler.handle(body)
-    read(server)
+    Handler.handle(body, client)
+    read(client)
 
   end
 
-  def read(server) do
-    response = TCPHelper.read(server)
-    read(response, server)
+  def read(client) do
+    response = TCPHelper.read(client)
+    read(response, client)
   end
 end

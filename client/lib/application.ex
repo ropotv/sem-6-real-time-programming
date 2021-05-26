@@ -9,7 +9,11 @@ defmodule ClientModule do
     children = [
       %{
         id: Connector,
-        start: {Connector, :connect, ['rtp-broker', 4040]},
+        start: {Connector, :connect, ["rtp-broker", 4040]},
+      },
+      %{
+        id: Assistant,
+        start: {Assistant, :start, [["tweets"]]},
       },
       %{
         id: TwitterService,

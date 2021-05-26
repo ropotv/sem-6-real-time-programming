@@ -14,7 +14,7 @@ defmodule Connector do
   end
 
   def subscribe(topic) do
-    GenServer.cast(__MODULE__, {:subscribe, Poison.encode!(%{type: 'subscribe', topic: topic})})
+    GenServer.cast(__MODULE__, {:subscribe, Poison.encode!(%{type: "subscribe", topic: topic})})
   end
 
   def handle_cast({:subscribe, data}, state) do

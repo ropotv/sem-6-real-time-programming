@@ -17,7 +17,7 @@ defmodule ServerModule do
       },
       %{
         id: Connector,
-        start: {Connector, :connect, ['rtp-broker', 4040]},
+        start: {Connector, :connect, ["rtp-broker", 4040]},
       },
       %{
         id: FirstSource,

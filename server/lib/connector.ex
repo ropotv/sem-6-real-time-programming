@@ -14,7 +14,7 @@ defmodule Connector do
   end
 
   def send_topic(topic, content) do
-    GenServer.cast(__MODULE__, {:send_topic, Poison.encode!(%{type: 'content', topic: topic, content: content})})
+    GenServer.cast(__MODULE__, {:send_topic, Poison.encode!(%{type: "content", topic: topic, content: content})})
   end
 
   def handle_cast({:send_topic, data}, state) do
