@@ -15,6 +15,7 @@ services:
     depends_on:
       - rtp-api
       - rtp-database
+      - rtp-broker
 
   rtp-client:
     container_name: rtp-client

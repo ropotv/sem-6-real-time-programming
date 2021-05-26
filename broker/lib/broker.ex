@@ -9,25 +9,24 @@ defmodule Broker do
   end
 
   defp loop_acceptor(socket) do
-    {:ok, client} = TCPHelper.accept(socket)
-    pid = spawn_link(__MODULE__, :read, [client])
-    :gen_tcp.controlling_process(client, pid)
+    {:ok, server} = TCPHelper.accept(socket)
+    pid = spawn_link(__MODULE__, :read, [server])
+    :gen_tcp.controlling_process(server, pid)
     loop_acceptor(socket)
   end
 
-  def read(:error, _) do
-
+  def read(:error, server) do
+    read(server)
   end
 
-  def read(body, socket) do
-    Logger.info("Got the socket body")
-    # Logger.info(body)
-    Handler.handle(body)
-    read(socket)
+  def read(body, server) do
+    Logger.info("Got the client body")
+    Handler.handle(server)
+    read(server)
   end
 
-  def read(client) do
-    response = TCPHelper.read(client)
-    read(response, client)
+  def read(server) do
+    response = TCPHelper.read(server)
+    read(response, server)
   end
 end

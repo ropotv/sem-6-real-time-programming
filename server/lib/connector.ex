@@ -13,12 +13,12 @@ defmodule Connector do
     GenServer.start_link(__MODULE__, %{socket: socket}, name: __MODULE__)
   end
 
-  def send_packet(topic, content) do
-    GenServer.cast(__MODULE__, {:send_packet, %{topic: topic, content: content}})
+  def send_topic(topic, content) do
+    GenServer.cast(__MODULE__, {:send_topic, Poison.encode!(%{type: 'content', topic: topic, content: content})})
   end
 
-  def handle_cast({:send_packet, data}, state) do
-    TCPHelper.send(state.socket, Poison.encode!(data))
+  def handle_cast({:send_topic, data}, state) do
+    TCPHelper.send(state.socket, data)
 
     {:noreply, state}
   end

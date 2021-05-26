@@ -19,6 +19,7 @@ defmodule Handler do
   def send_content(client, content) do
     try do
       TCPHelper.send(client, content)
+      IO.puts("Data was send to the client")
     rescue
       _ -> IO.puts("Could not send data to the client, adding to the queue")
            Queue.add(client, content)
@@ -26,13 +27,19 @@ defmodule Handler do
   end
 
   def handle(data) do
-    {:ok, decoded} = Poison.decode(data)
+    IO.puts("Handle obtained data")
+
+    decoded = Poison.decode!(data)
     topic = decoded["topic"]
-    action = decoded["action"]
+    type = decoded["type"]
+
+    IO.puts("Type is")
+    IO.inspect(type)
+
     clients = Registry.get(topic)
 
     for client <- clients  do
-      handle_action(String.to_atom(action), client, decoded)
+      handle_action(String.to_atom(type), client, decoded)
     end
   end
 end

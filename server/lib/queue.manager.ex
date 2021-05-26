@@ -11,10 +11,10 @@ defmodule Queue.Manager do
   end
 
   def handle_info(:manage, state) do
-    IO.puts("manage")
     if Queue.length() > 0 do
-      {client, content} = Queue.get()
-      Handler.send_content(client, content)
+      data = Queue.get()
+
+      Dispatcher.dispatch(data)
       manage()
     else
       manage()
@@ -23,6 +23,6 @@ defmodule Queue.Manager do
   end
 
   defp manage() do
-    Process.send_after(self(), :manage, 1000)
+    Process.send_after(self(), :manage, 5000)
   end
 end

@@ -6,8 +6,8 @@ defmodule Fetcher do
 
   def loop_fetch() do
     receive do
-      body -> Dispatcher.dispatch(body.data)
+      res -> Queue.add(res.data)
+             loop_fetch()
     end
-    loop_fetch()
   end
 end

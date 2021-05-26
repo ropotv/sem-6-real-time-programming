@@ -8,6 +8,14 @@ defmodule ServerModule do
 
     children = [
       %{
+        id: Queue,
+        start: {Queue, :start_link, []}
+      },
+      %{
+        id: Queue.Manager,
+        start: {Queue.Manager, :start_link, []}
+      },
+      %{
         id: Connector,
         start: {Connector, :connect, ['rtp-broker', 4040]},
       },
